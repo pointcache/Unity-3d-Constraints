@@ -1,4 +1,4 @@
-# UnityLib_Constraints
+# Unity-3d-Constraints
 
 A set of components for performing different Constraining actions on transforms.
 These are used in rigs and complex scenarios.
