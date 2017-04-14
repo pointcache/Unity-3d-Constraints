@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
 
@@ -47,7 +47,7 @@ public class RotationConstraint : MonoBehaviour {
             return;
         }
         if (Y && X && Z) {
-            transform.localRotation = qrot * Quaternion.Euler(offset);
+            transform.rotation = qrot * Quaternion.Euler(offset);
             //resultEuler = transform.rotation.eulerAngles;
             //resultQuaternion = transform.rotation;
             return;

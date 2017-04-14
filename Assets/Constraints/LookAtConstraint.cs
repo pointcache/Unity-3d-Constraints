@@ -4,6 +4,7 @@ using System.Collections;
 public class LookAtConstraint : MonoBehaviour {
     public bool update;
     public Transform target;
+    public bool FindCamera;
 	public UpdateMethod updateMethod;
         public enum UpdateMethod
         {
@@ -12,9 +13,11 @@ public class LookAtConstraint : MonoBehaviour {
             dontUpdate
         }
     Transform tr;
-    void Awake()
+    void OnEnable()
     {
         tr = transform;
+        if (FindCamera)
+            target = Camera.main.transform;
     }
 	// Update is called once per frame
 	void Update () {

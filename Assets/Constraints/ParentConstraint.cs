@@ -2,19 +2,19 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
-public class ParentConstraint : MonoBehaviour
-{
+public class ParentConstraint : MonoBehaviour {
+
+    public bool inheritPosition;
+    public bool inheritRotation;
     public UpdateMethod updateMethod;
-    public enum UpdateMethod
-    {
+    public enum UpdateMethod {
         update,
         lateUpdate,
         dontUpdate
     }
 
     public InitMethod initMethod;
-    public enum InitMethod
-    {
+    public enum InitMethod {
         OnEnable,
         Start,
         Awake
@@ -27,33 +27,27 @@ public class ParentConstraint : MonoBehaviour
     private bool initialized;
     public Transform _parent;
 
-    private void Start()
-    {
+    private void Start() {
         if (initMethod == InitMethod.Start)
             Init();
     }
 
-    private void Awake()
-    {
+    private void Awake() {
         if (initMethod == InitMethod.Awake)
             Init();
     }
 
-    private void OnEnable()
-    {
+    private void OnEnable() {
         if (initMethod == InitMethod.OnEnable)
             Init();
     }
 
-    void Init()
-    {
+    void Init() {
         if (!_parent)
             return;
         childLocalPos = _parent.InverseTransformPoint(transform.position);
 
-
-        switch (alignAxis)
-        {
+        switch (alignAxis) {
             case Axis.x:
                 _childRotOffset = Quaternion.FromToRotation(_parent.right, transform.right);
                 break;
@@ -66,14 +60,11 @@ public class ParentConstraint : MonoBehaviour
             default:
                 break;
         }
-
         initialized = true;
     }
 
-    void Update()
-    {
-        if (!initialized)
-        {
+    void Update() {
+        if (!initialized) {
             Init();
             return;
         }
@@ -82,16 +73,15 @@ public class ParentConstraint : MonoBehaviour
         Sync();
     }
 
-    public void Sync()
-    {
-        transform.position = _parent.TransformPoint(childLocalPos);
-        transform.rotation = _parent.rotation * _childRotOffset;
+    public void Sync() {
+        if (inheritPosition)
+            transform.position = _parent.TransformPoint(childLocalPos);
+        if (inheritRotation)
+            transform.rotation = _parent.rotation * _childRotOffset;
     }
 
-    void LateUpdate()
-    {
-        if (!initialized)
-        {
+    void LateUpdate() {
+        if (!initialized) {
             Init();
             return;
         }
