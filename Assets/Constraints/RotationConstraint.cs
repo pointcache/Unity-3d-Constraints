@@ -2,6 +2,11 @@
 using System.Collections;
 using UnityEngine.Networking;
 
+public enum Axis {
+    x, y, z
+}
+
+
 public class RotationConstraint : MonoBehaviour {
     /* to keep the rotation on one axis at zero, remove the target transform and enable that axis*/
     public Vector3 targetRotation; // The current rotation to constraint to, can be set manually if the target Transform is null
